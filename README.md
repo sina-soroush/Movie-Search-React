@@ -10,7 +10,7 @@ A stunning, modern movie search application built with React and the IMDB API. F
 
 You can view the live version of this project here:
 
-👉 [weather-display-react.netlify.app](https://moviesearchreact-app.netlify.app/)
+👉 weather-display-react.netlify.app [(https://moviesearchreact-app.netlify.app/)](https://movie-search-react-red.vercel.app/)
 
 
 <img width="1920" height="914" alt="Movie-Search-App" src="https://github.com/user-attachments/assets/aefd325a-a76d-4eac-9739-b2bdd412860a" />

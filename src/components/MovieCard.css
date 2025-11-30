@@ -138,12 +138,13 @@
 
 @media (max-width: 768px) {
   .card-container {
-    height: 350px;
+    height: 540px;
+    width: 90%;
   }
 
   .card-front,
   .card-back {
-    min-height: 350px;
+    min-height: 540px;
   }
 
   .movie-title {

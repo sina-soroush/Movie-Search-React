@@ -63,7 +63,7 @@ function App() {
   // Load default movies on initial render
   useEffect(() => {
     const loadDefaultMovies = async () => {
-      const titles = ['Gladiator', 'Matrix', 'Lord of the Rings', 'Snatch']
+      const titles = ['Gladiator', 'Godfather', 'Lord of the Rings', 'Snatch']
       setLoading(true)
       
       try {

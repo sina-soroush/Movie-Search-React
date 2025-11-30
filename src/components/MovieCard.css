@@ -52,7 +52,7 @@
 }
 
 .card-back {
-  background-image: linear-gradient(to top, #ecd502, #c6b804, #a39c05, #828005, #636505);
+  background: linear-gradient(197deg, #3E2723, #5D4037);
   transform: rotateY(180deg);
   transform-style: preserve-3d;
   display: flex;

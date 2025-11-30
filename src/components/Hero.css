@@ -40,11 +40,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(ellipse at 60% 40%, rgba(59, 130, 246, 0.3) 0%, transparent 60%),
-    radial-gradient(ellipse at 30% 80%, rgba(167, 139, 250, 0.3) 0%, transparent 60%),
-    radial-gradient(ellipse at 90% 70%, rgba(14, 165, 233, 0.2) 0%, transparent 60%);
-  animation: aurora 15s ease-in-out infinite reverse;
+  background: linear-gradient(
+    135deg,
+    #112e09,
+    #2e2809,
+    #2e1409,
+    #1b092e
+  );
   filter: blur(80px);
 }
 
@@ -118,13 +120,9 @@
   margin: 0 0 0 0;
   padding: 0;
   text-align: center;
-  background: linear-gradient(
-    135deg,
-    #10b981,
-    #60a5fa,
-    #8b5cf6,
-    #ec4899
-  );
+  background : radial-gradient(ellipse at 60% 40%, rgba(59, 130, 246, 0.3) 0%, transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(167, 139, 250, 0.3) 0%, transparent 60%), radial-gradient(ellipse at 90% 70%, rgba(14, 165, 233, 0.2) 0%, transparent 60%);
+  animation: aurora 15s ease-in-out infinite reverse;
+  filter: blur(80px);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -241,8 +239,8 @@
 
 .movies-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
   width: 100%;
   padding: 1rem 0;
 }
@@ -301,7 +299,7 @@
   }
 
   .movies-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 }

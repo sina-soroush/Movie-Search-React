@@ -35,7 +35,17 @@ function App() {
           Actors: movie['#ACTORS'] || '',
           Rank: movie['#RANK'] || ''
         }))
-        setMovies(transformedMovies)
+        
+        // Sort by year (latest first) and take only first 4
+        const sortedMovies = transformedMovies
+          .sort((a, b) => {
+            const yearA = parseInt(a.Year) || 0
+            const yearB = parseInt(b.Year) || 0
+            return yearB - yearA
+          })
+          .slice(0, 4)
+        
+        setMovies(sortedMovies)
         setError('')
       } else {
         setMovies([])
@@ -52,7 +62,42 @@ function App() {
 
   // Load default movies on initial render
   useEffect(() => {
-    searchMovies('Avengers')
+    const loadDefaultMovies = async () => {
+      const titles = ['Gladiator', 'Matrix', 'Lord of the Rings', 'Snatch']
+      setLoading(true)
+      
+      try {
+        const allMovies = []
+        
+        for (const title of titles) {
+          const response = await fetch(`${API_URL}?q=${encodeURIComponent(title)}`)
+          const data = await response.json()
+          
+          if (data && data.description && data.description.length > 0) {
+            const movie = data.description[0]
+            allMovies.push({
+              imdbID: movie['#IMDB_ID'] || movie['#IMG_POSTER'],
+              Title: movie['#TITLE'] || 'Untitled',
+              Year: movie['#YEAR'] || 'N/A',
+              Type: movie['#IMDB_IV']?.toLowerCase().includes('tv') ? 'series' : 'movie',
+              Poster: movie['#IMG_POSTER'] || 'N/A',
+              Actors: movie['#ACTORS'] || '',
+              Rank: movie['#RANK'] || ''
+            })
+          }
+        }
+        
+        setMovies(allMovies.slice(0, 4))
+        setError('')
+      } catch (err) {
+        setError('Failed to load movies')
+        console.error('Error loading default movies:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    loadDefaultMovies()
   }, [])
 
   // Debounce search term for instant search

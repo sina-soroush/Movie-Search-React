@@ -2,15 +2,12 @@ import { useState, useEffect } from 'react'
 import './MovieSearch.css'
 import MovieCard from './MovieCard'
 
-const API_URL = 'https://www.omdbapi.com'
+const API_URL = 'https://imdb.iamidiotareyoutoo.com/search'
 
-const MovieSearch = () => {
+const MovieSearch = ({ searchTerm, triggerSearch }) => {
   const [movies, setMovies] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-
-  const apiKey = import.meta.env.VITE_OMDB_API_KEY
 
   const searchMovies = async (title) => {
     if (!title.trim()) {
@@ -18,62 +15,58 @@ const MovieSearch = () => {
       return
     }
 
-    if (!apiKey || apiKey === 'your_api_key_here') {
-      setError('Please configure your OMDB API key in .env file')
-      return
-    }
-
     setLoading(true)
     setError('')
 
     try {
-      const response = await fetch(`${API_URL}?apikey=${apiKey}&s=${title}`)
+      const response = await fetch(`${API_URL}?q=${encodeURIComponent(title)}`)
       const data = await response.json()
 
-      if (data.Response === 'True') {
-        setMovies(data.Search)
+      if (data && data.description && data.description.length > 0) {
+        // Transform the API response to match our card format
+        const transformedMovies = data.description.map((movie) => ({
+          imdbID: movie['#IMDB_ID'] || movie['#IMG_POSTER'],
+          Title: movie['#TITLE'] || 'Untitled',
+          Year: movie['#YEAR'] || 'N/A',
+          Type: movie['#IMDB_IV']?.toLowerCase().includes('tv') ? 'series' : 'movie',
+          Poster: movie['#IMG_POSTER'] || 'N/A',
+          Actors: movie['#ACTORS'] || '',
+          Rank: movie['#RANK'] || ''
+        }))
+        setMovies(transformedMovies)
         setError('')
       } else {
         setMovies([])
-        setError(data.Error || 'No movies found')
+        setError('No movies found')
       }
     } catch (err) {
       setError('Failed to fetch movies. Please try again.')
       setMovies([])
+      console.error('Error fetching movies:', err)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    searchMovies(searchTerm)
-  }
-
-  // Load some default movies on initial render
+  // Load default movies on initial render
   useEffect(() => {
-    if (apiKey && apiKey !== 'your_api_key_here') {
-      searchMovies('Marvel')
-    }
+    searchMovies('Avengers')
   }, [])
+
+  // Trigger search when triggerSearch changes
+  useEffect(() => {
+    if (triggerSearch > 0) {
+      if (searchTerm && searchTerm.trim()) {
+        searchMovies(searchTerm)
+      } else {
+        setMovies([])
+        setError('')
+      }
+    }
+  }, [triggerSearch, searchTerm])
 
   return (
     <div className="movie-search-container">
-      <div className="search-section">
-        <form onSubmit={handleSubmit} className="search-form">
-          <input
-            type="text"
-            placeholder="Search for movies..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
-          />
-          <button type="submit" className="search-button">
-            Search
-          </button>
-        </form>
-      </div>
-
       {error && <div className="error-message">{error}</div>}
 
       {loading ? (

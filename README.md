@@ -6,6 +6,16 @@ A stunning, modern movie search application built with React and the IMDB API. F
 ![Vite](https://img.shields.io/badge/Vite-5.0.8-purple)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+## 🔗 Preview
+
+You can view the live version of this project here:
+
+👉 [weather-display-react.netlify.app](https://moviesearchreact-app.netlify.app/)
+
+
+<img width="1920" height="914" alt="Movie-Search-App" src="https://github.com/user-attachments/assets/aefd325a-a76d-4eac-9739-b2bdd412860a" />
+
+
 ## ✨ Features
 
 - 🌌 **Aurora Borealis Background** - Mesmerizing animated gradient background
